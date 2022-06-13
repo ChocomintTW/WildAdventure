@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "wild_adventure",
+  "version": "${version}",
+
+  "name": "Wild Adventure",
+  "description": "",
+  "authors": [
+    "Chocomint"
+  ],
+  "contact": {
+    "homepage": "https://chocomint.cf/"
+  },
+
+  "license": "MIT",
+  "icon": "assets/wild_adventure/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.chocomint.wild_adventure.WildAdventure"
+    ],
+    "client": [
+      "net.chocomint.wild_adventure.Client"
+    ]
+  },
+  "mixins": [
+    "wild_adventure.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.14.6",
+    "fabric": "*",
+    "minecraft": "1.19",
+    "java": ">=17"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
