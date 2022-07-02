@@ -28,8 +28,8 @@ public class CampfireBlockEntityMixin extends BlockEntity implements ICampfireDa
 		ICampfireDataSaver campfire = (ICampfireDataSaver) campfireBlockEntity;
 		int time = campfire.getBurnTime();
 
-		if (time < 150)
-			world.setBlockState(pos, world.getBlockState(pos).with(((ICampfireStates) state.getBlock()).getLight(state), (int) Math.ceil((double) time / 10)));
+		if (time < 300)
+			world.setBlockState(pos, world.getBlockState(pos).with(((ICampfireStates) state.getBlock()).getLight(state), (int) Math.ceil((double) time / 20)));
 
 		if (time > 0)
 			campfire.addBurnTime(-1);

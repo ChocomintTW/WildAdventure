@@ -1,6 +1,7 @@
 package net.chocomint.wild_adventure.item;
 
 import net.chocomint.wild_adventure.WildAdventure;
+import net.chocomint.wild_adventure.item.custom.EnergyDrinkItem;
 import net.chocomint.wild_adventure.item.custom.HeatedWaterBottleItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.FoodComponent;
@@ -15,6 +16,8 @@ public class ModItems {
 	public static final Item HEATED_WATER = registerItem("heated_water",
 			new HeatedWaterBottleItem(new FabricItemSettings().recipeRemainder(Items.GLASS_BOTTLE)
 					.food(new FoodComponent.Builder().alwaysEdible().build()).maxCount(8).group(ItemGroup.FOOD)));
+	public static final Item ENERGY_DRINK = registerItem("energy_drink",
+			new EnergyDrinkItem(new FabricItemSettings().food(new FoodComponent.Builder().alwaysEdible().build()).maxCount(8).group(ItemGroup.FOOD)));
 
 	public static Item registerItem(String name, Item item) {
 		return Registry.register(Registry.ITEM, new Identifier(WildAdventure.MOD_ID, name), item);

@@ -2,8 +2,8 @@ package net.chocomint.wild_adventure.mixin;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.chocomint.wild_adventure.effect.ModEffects;
-import net.chocomint.wild_adventure.util.interfaces.IPlayerDataSaver;
 import net.chocomint.wild_adventure.util.Utils;
+import net.chocomint.wild_adventure.util.interfaces.IPlayerDataSaver;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.data.DataTracker;
@@ -80,7 +80,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements IPlayerD
 					NbtCompound nbt = NbtHelper.fromNbtProviderString("{pages:[\"\\\"book.wild_adventure.journal.info1\\\"\"],author:Chocomint,title:\"dummy\",titleKey:\"book.wild_adventure.journal.title\"}");
 					ItemStack book = new ItemStack(Items.WRITTEN_BOOK);
 					book.setNbt(nbt);
-					giveItemStack(book);
+//					giveItemStack(book);
 				} catch (CommandSyntaxException e) {
 					e.printStackTrace();
 				}
