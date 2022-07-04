@@ -9,8 +9,7 @@
     "CampfireBlockEntityMixin",
     "BlockOnPlacedMixin",
     "BlockLuminanceModifier",
-    "InGameHudMixin",
-    "WrittenBookMixin"
+    "InGameHudMixin"
   ],
   "client": [
   ],

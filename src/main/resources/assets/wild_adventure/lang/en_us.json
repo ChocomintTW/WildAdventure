@@ -3,6 +3,14 @@
 
   "effect.wild_adventure.water_shortage": "Water Shortage",
 
-  "book.wild_adventure.journal.title": "Survivor Journal",
-  "book.wild_adventure.journal.info1": "Coal can be used to make campfire"
+  "command.wild_adventure.first_load_1": "Hi, %s! I'm %s. Thank you for playing this mod!",
+  "command.wild_adventure.first_load_2": "Type %s for more information!",
+  "command.wild_adventure.help.start_title": "[START]",
+  "command.wild_adventure.help.start_info1": "1. There is a coal in bonus chest used to make campfire.",
+  "command.wild_adventure.help.start_info2": "2. Campfire will burn out. You have to add %s into it.",
+  "command.wild_adventure.help.start_info3": "3. Water has to be boiled by campfire to drink.",
+
+  "chat.wild_help.tooltip.mywebsite": "Go to my website",
+  "chat.wild_help.tooltip.help": "Click for help",
+  "chat.wild_help.tooltip.stick": "+10 seconds per stick"
 }

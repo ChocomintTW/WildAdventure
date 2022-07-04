@@ -10,18 +10,17 @@ import net.minecraft.text.LiteralTextContent;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.TranslatableTextContent;
 import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.GameMode;
 import net.minecraft.world.RaycastContext;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeKeys;
 
-import java.util.AbstractMap;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static net.minecraft.world.RaycastContext.FluidHandling;
@@ -34,6 +33,10 @@ public class Utils {
 
 	public static Biome biome(LivingEntity player) {
 		return biomeKey(player).value();
+	}
+
+	public static RegistryEntry<Biome> biome(World world, BlockPos pos) {
+		return world.getBiomeAccess().getBiome(pos);
 	}
 
 	public static boolean onlyZ(Vec3d v, double err) {
@@ -91,6 +94,9 @@ public class Utils {
 		// near campfire
 		base += heatField;
 
+//		nearBiomes(player).forEach(biomeEntry -> System.out.print(biomeEntry.getKey().get().getValue() + ", "));
+//		System.out.println();
+
 		return base;
 	}
 
@@ -109,19 +115,17 @@ public class Utils {
 		return max.get();
 	}
 
+	public static Set<RegistryEntry<Biome>> nearBiomes(LivingEntity player) {
+		Set<RegistryEntry<Biome>> list = new HashSet<>();
+		final BlockPos center = player.getBlockPos();
+		final World world = player.getWorld();
+		for (int yaw = 0; yaw < 360; yaw += 30) {
+			list.add(biome(world, center.add(new BlockPos(Vec3d.fromPolar(0, yaw).multiply(30)))));
+		}
+		return list;
+	}
+
 	public static int hunger(ItemStack stack) {
 		return Objects.requireNonNull(stack.getItem().getFoodComponent()).getHunger();
-	}
-
-	public static MutableText string2Text(String s) {
-		return MutableText.of(new LiteralTextContent(s));
-	}
-
-	public static MutableText translationKey2Text(String key) {
-		return MutableText.of(new TranslatableTextContent(key));
-	}
-
-	public static String getAuthor() {
-		return WildAdventure.class.getAnnotation(Author.class).value();
 	}
 }

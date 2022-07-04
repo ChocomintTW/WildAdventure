@@ -1,0 +1,16 @@
+{
+  "item.wild_adventure.heated_water": "煮沸的水",
+
+  "effect.wild_adventure.water_shortage": "缺水",
+
+  "command.wild_adventure.first_load_1": "嗨， %s! 我是 %s. 首先，感謝你遊玩本模組！",
+  "command.wild_adventure.first_load_2": "輸入 %s 以獲得更多資訊！",
+  "command.wild_adventure.help.start_title": "[開始]",
+  "command.wild_adventure.help.start_info1": "1. 獎勵箱中的煤炭可以用來製作營火",
+  "command.wild_adventure.help.start_info2": "2. 營火會燒完，你必須加入%s維持燃燒",
+  "command.wild_adventure.help.start_info3": "3. 水需要經由營火煮過才可以喝",
+
+  "chat.wild_help.tooltip.mywebsite": "前我我的網站",
+  "chat.wild_help.tooltip.help": "點擊得到幫助",
+  "chat.wild_help.tooltip.stick": "每根木棒 +10 秒"
+}

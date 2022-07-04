@@ -11,12 +11,15 @@ import net.minecraft.block.entity.CampfireBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.recipe.CampfireCookingRecipe;
 import net.minecraft.stat.Stats;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -26,6 +29,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.Optional;
+
 @Mixin(CampfireBlock.class)
 public class CampfireBlockMixin implements ICampfireStates {
 	private static final IntProperty LIGHT = IntProperty.of("light", 0, 15);
@@ -34,6 +39,12 @@ public class CampfireBlockMixin implements ICampfireStates {
 	public void appendProperties(StateManager.Builder<Block, BlockState> builder, CallbackInfo ci) {
 		builder.add(LIGHT);
 	}
+
+//	@Inject(method = "getRecipeFor", at = @At("HEAD"), cancellable = true)
+//	public void recipe(ItemStack stack, CallbackInfoReturnable<Optional<CampfireCookingRecipe>> cir) {
+//		if (stack.isOf(Items.POTION) && stack.getNbt() != null && stack.getNbt().getString("Potion").equals("minecraft:water"))
+//			cir.setReturnValue(new CampfireCookingRecipe(new Identifier(Wil)));
+//	}
 
 	@Inject(method = "onUse", at = @At("HEAD"), cancellable = true)
 	public void onUse(BlockState state, World world, BlockPos pos, PlayerEntity player,
@@ -47,7 +58,7 @@ public class CampfireBlockMixin implements ICampfireStates {
 				if (stack.isOf(Items.STICK)) {
 					((ICampfireDataSaver) campfireBlockEntity).addBurnTime(stack.getCount() * Utils.s2t(10));
 					player.setStackInHand(hand, ItemStack.EMPTY);
-					player.sendMessage(Utils.string2Text(Utils.t2ms(((ICampfireDataSaver) campfireBlockEntity).getBurnTime())).formatted(Formatting.AQUA), true);
+					player.sendMessage(Text.of(Utils.t2ms(((ICampfireDataSaver) campfireBlockEntity).getBurnTime())).copy().formatted(Formatting.AQUA), true);
 
 				} else if (stack.isOf(Items.POTION) && stack.getNbt() != null && stack.getNbt().getString("Potion").equals("minecraft:water")) {
 					campfireBlockEntity.addItem(player, stack, 200);

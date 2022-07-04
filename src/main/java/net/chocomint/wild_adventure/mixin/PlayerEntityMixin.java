@@ -1,6 +1,5 @@
 package net.chocomint.wild_adventure.mixin;
 
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.chocomint.wild_adventure.effect.ModEffects;
 import net.chocomint.wild_adventure.util.Utils;
 import net.chocomint.wild_adventure.util.interfaces.IPlayerDataSaver;
@@ -15,9 +14,7 @@ import net.minecraft.entity.passive.HorseEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.vehicle.BoatEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -75,15 +72,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements IPlayerD
 	@Inject(method = "tick", at = @At("HEAD"), cancellable = true)
 	public void tick(CallbackInfo ci) {
 		if (!this.getWorld().isClient() && this.isPlayer()) {
-			if (!this.notFirstLoad) {
-				try {
-					NbtCompound nbt = NbtHelper.fromNbtProviderString("{pages:[\"\\\"book.wild_adventure.journal.info1\\\"\"],author:Chocomint,title:\"dummy\",titleKey:\"book.wild_adventure.journal.title\"}");
-					ItemStack book = new ItemStack(Items.WRITTEN_BOOK);
-					book.setNbt(nbt);
-//					giveItemStack(book);
-				} catch (CommandSyntaxException e) {
-					e.printStackTrace();
-				}
+			if (!this.notFirstLoad && this.getServer() != null) {
 				this.notFirstLoad = true;
 			}
 
