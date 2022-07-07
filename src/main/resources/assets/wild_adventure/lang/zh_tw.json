@@ -1,7 +1,10 @@
 {
   "item.wild_adventure.heated_water": "煮沸的水",
+  "item.wild_adventure.energy_drink": "能量飲",
 
   "effect.wild_adventure.water_shortage": "缺水",
+
+  "enchantment.wild_adventure.thermostatic": "恆溫",
 
   "command.wild_adventure.first_load_1": "嗨， %s! 我是 %s. 首先，感謝你遊玩本模組！",
   "command.wild_adventure.first_load_2": "輸入 %s 以獲得更多資訊！",

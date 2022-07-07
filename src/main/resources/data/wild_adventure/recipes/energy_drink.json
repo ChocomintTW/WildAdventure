@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    "SAS",
+    " G "
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:carrot"
+    },
+    "S": {
+      "item": "minecraft:sugar"
+    },
+    "A": {
+      "item": "minecraft:apple"
+    },
+    "G": {
+      "item": "minecraft:glass_bottle"
+    }
+  },
+  "result": {
+    "item": "wild_adventure:energy_drink",
+    "count": 1
+  }
+}

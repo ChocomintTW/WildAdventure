@@ -4,12 +4,10 @@ import net.chocomint.wild_adventure.effect.ModEffects;
 import net.chocomint.wild_adventure.event.ModEvent;
 import net.chocomint.wild_adventure.item.ModItems;
 import net.chocomint.wild_adventure.util.ModLootTableModifier;
-import net.chocomint.wild_adventure.util.annotations.Author;
 import net.fabricmc.api.ModInitializer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Author("Chocomint")
 public class WildAdventure implements ModInitializer {
 	public static final String MOD_ID = "wild_adventure";
 	public static final Logger LOGGER = LogManager.getLogger("Wild Adventure");

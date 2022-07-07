@@ -1,14 +1,12 @@
 package net.chocomint.wild_adventure.util;
 
-import net.chocomint.wild_adventure.WildAdventure;
+import net.chocomint.wild_adventure.enchantment.ModEnchantments;
 import net.chocomint.wild_adventure.event.ModEvent;
-import net.chocomint.wild_adventure.util.annotations.Author;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.LiteralTextContent;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.TranslatableTextContent;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -73,29 +71,30 @@ public class Utils {
 
 	public static double temperature(LivingEntity player) {
 		// biome
+		final World world = player.getWorld();
 		final RegistryEntry<Biome> biomeKey = biomeKey(player);
-		final float t = biomeKey.value().getTemperature();
-		double base = Math.log(t + 1.85) / Math.log(1.011) - 62;
+		final double t = nearBiomeTemperature(player);
+		double base = Math.log(t + 1.4) / Math.log(1.015) - 33;
 		final double heatField = getHeatField(player, base);
 
 		// height
-		if (player.getY() >= 200) {
-			base -= (player.getY() - 200) / 50;
+		if (player.getY() >= 100) {
+			base -= (player.getY() - 100) / 40;
 		}
 
 		// time
-		long time = player.getWorld().getTimeOfDay();
+		long time = world.getTimeOfDay();
 		double timeFactor = 4;
 		if (biomeKey.getKey().isPresent())
 			timeFactor = TIME_FACTOR_MAP.getOrDefault(biomeKey.getKey().get(), 4.0);
 
 		base += timeFactor * Math.sin(2 * Math.PI / 24000 * (time - 2000));
 
+		// weather
+		base -= world.getRainGradient(1.0f) * (world.isThundering() ? 4 : 3);
+
 		// near campfire
 		base += heatField;
-
-//		nearBiomes(player).forEach(biomeEntry -> System.out.print(biomeEntry.getKey().get().getValue() + ", "));
-//		System.out.println();
 
 		return base;
 	}
@@ -115,17 +114,30 @@ public class Utils {
 		return max.get();
 	}
 
-	public static Set<RegistryEntry<Biome>> nearBiomes(LivingEntity player) {
-		Set<RegistryEntry<Biome>> list = new HashSet<>();
-		final BlockPos center = player.getBlockPos();
-		final World world = player.getWorld();
-		for (int yaw = 0; yaw < 360; yaw += 30) {
-			list.add(biome(world, center.add(new BlockPos(Vec3d.fromPolar(0, yaw).multiply(30)))));
+	public static double nearBiomeTemperature(LivingEntity player) {
+		double sum = 0;
+		World world = player.getWorld();
+		for (int i = -10; i <= 10; i++) {
+			for (int j = -10; j <= 10; j++) {
+				BlockPos pos = new BlockPos(player.getPos().add(i, 0, j));
+				sum += biome(world, pos).value().getTemperature();
+			}
 		}
-		return list;
+		return sum / (21 * 21);
 	}
 
 	public static int hunger(ItemStack stack) {
 		return Objects.requireNonNull(stack.getItem().getFoodComponent()).getHunger();
+	}
+
+	public static int thermostaticFactor(LivingEntity entity) {
+		AtomicReference<Integer> total = new AtomicReference<>(0);
+		entity.getArmorItems().forEach(stack -> {
+			int lvl = EnchantmentHelper.getLevel(ModEnchantments.THERMOSTATIC, stack);
+			if (stack.getItem() instanceof ArmorItem armor) {
+				total.updateAndGet(v -> v + armor.getProtection() * lvl);
+			}
+		});
+		return total.get(); // up to 80
 	}
 }

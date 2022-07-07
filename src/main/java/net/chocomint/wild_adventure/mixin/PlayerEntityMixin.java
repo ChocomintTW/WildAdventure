@@ -134,17 +134,18 @@ public abstract class PlayerEntityMixin extends LivingEntity implements IPlayerD
 
 		// 在溫度高的地方也會額外消耗水量
 		double temperature = Utils.temperature(this);
-		if (temperature >= 30) {
-			res += 0.03;
-			res *= 1 + (temperature - 30) / 60;
-			// 恆溫劑可以降低溫度消耗水的加成
+		// 恆溫附魔可以降低溫度消耗水的加成
+		double factor = ((double) Utils.thermostaticFactor(this)) / 80;
+		if (temperature >= 25) {
+			res += 0.03 - factor * 0.02;
+			res *= 1 + (temperature - 25) / (60 + factor * 40);
 		} else if (temperature <= -10) {
 			res *= 0.8;
 		}
 
 		// 燒傷加成
 		if (this.isOnFire() && !this.hasStatusEffect(StatusEffects.FIRE_RESISTANCE))
-			res *= 2;
+			res *= (2 - factor * 0.7);
 
 		return res;
 	}
@@ -152,7 +153,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements IPlayerD
 	private float vitalityDecrement() {
 		float water = ((IPlayerDataSaver) this).getWater();
 		double temperature = Utils.temperature(this);
-		float res = (float) Math.pow(this.getVelocity().length() * 10, 2) / 450;
+		float res = (float) Math.pow(this.getVelocity().length() * 10, 2) / 500;
 		res -= 0.0003 * (water - 50);
 
 		if (temperature <= -10) {

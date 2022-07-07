@@ -1,7 +1,10 @@
 {
   "item.wild_adventure.heated_water": "Heated Water",
+  "item.wild_adventure.energy_drink": "Energy Drink",
 
   "effect.wild_adventure.water_shortage": "Water Shortage",
+
+  "enchantment.wild_adventure.thermostatic": "Thermostatic",
 
   "command.wild_adventure.first_load_1": "Hi, %s! I'm %s. Thank you for playing this mod!",
   "command.wild_adventure.first_load_2": "Type %s for more information!",
@@ -12,5 +15,7 @@
 
   "chat.wild_help.tooltip.mywebsite": "Go to my website",
   "chat.wild_help.tooltip.help": "Click for help",
-  "chat.wild_help.tooltip.stick": "+10 seconds per stick"
+  "chat.wild_help.tooltip.stick": "+10 seconds per stick",
+
+  "tooltip.wild_adventure.energy_drink": "+20 vitality"
 }
