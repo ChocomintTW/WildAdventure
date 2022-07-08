@@ -1,6 +1,7 @@
 package net.chocomint.wild_adventure;
 
 import net.chocomint.wild_adventure.effect.ModEffects;
+import net.chocomint.wild_adventure.enchantment.ModEnchantments;
 import net.chocomint.wild_adventure.event.ModEvent;
 import net.chocomint.wild_adventure.item.ModItems;
 import net.chocomint.wild_adventure.util.ModLootTableModifier;
@@ -18,6 +19,7 @@ public class WildAdventure implements ModInitializer {
 		ModEffects.registerModEffect();
 		ModEvent.registerServerEvents();
 		ModLootTableModifier.modifyLootTables();
+		ModEnchantments.registerModEnchantments();
 
 		WildAdventure.LOGGER.info("Welcome to Wild Adventure!");
 	}
