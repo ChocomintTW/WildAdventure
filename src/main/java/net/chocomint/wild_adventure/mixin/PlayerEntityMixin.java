@@ -14,6 +14,7 @@ import net.minecraft.entity.passive.HorseEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.vehicle.BoatEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -31,7 +32,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements IPlayerD
 	private static final TrackedData<Float> WATER = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.FLOAT);
 	private static final TrackedData<Float> VITALITY = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.FLOAT);
 
-	@Shadow public abstract boolean giveItemStack(ItemStack stack);
+//	@Shadow public abstract boolean giveItemStack(ItemStack stack);
 
 	protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
 		super(entityType, world);
@@ -47,6 +48,11 @@ public abstract class PlayerEntityMixin extends LivingEntity implements IPlayerD
 	public void eat(World world, ItemStack stack, CallbackInfoReturnable<ItemStack> cir) {
 		if (stack.isFood()) {
 			this.addVitality(Utils.hunger(stack) * 3);
+
+			if (stack.isOf(Items.APPLE) || stack.isOf(Items.CARROT) || stack.isOf(Items.MELON_SLICE)
+					|| stack.isOf(Items.GLOW_BERRIES) || stack.isOf(Items.SWEET_BERRIES)) this.addWater(5);
+			if (stack.isOf(Items.BEETROOT_SOUP)|| stack.isOf(Items.MUSHROOM_STEW)
+					|| stack.isOf(Items.RABBIT_STEW) || stack.isOf(Items.SUSPICIOUS_STEW)) this.addWater(10);
 		}
 	}
 
@@ -77,7 +83,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements IPlayerD
 			}
 
 			if (Utils.getGameMode(this).isSurvivalLike()) {
-				if (!this.isSubmergedInWater()) {
+				if (!this.isSubmergedInWater() && !this.getWorld().isRaining()) {
 					this.addWater(-waterDecrement());
 				}
 
@@ -85,7 +91,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements IPlayerD
 				if (this.getWater() <= 5) {
 					this.addStatusEffect(new StatusEffectInstance(ModEffects.WATER_SHORTAGE, 10, 1));
 					ticker1++;
-					if (ticker1 > 40) {
+					if (ticker1 > 60) {
 						this.heal(-1);
 						ticker1 = 0;
 					}
@@ -103,7 +109,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements IPlayerD
 				}
 				if (v == 0) {
 					ticker2++;
-					if (ticker2 > 20) {
+					if (ticker2 > 60) {
 						this.heal(-1);
 						ticker2 = 0;
 					}
@@ -114,10 +120,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements IPlayerD
 
 	private float waterDecrement() {
 		Vec3d velocity = this.getVelocity();
-		float res = (float) Math.pow(velocity.length() * 10, 2) / 350;
+		float res = (float) Math.pow(velocity.length() * 10, 2) / 450;
 
-		if (Utils.onlyZ(velocity, 0.1))
-			return 0;
+		if (Utils.onlyZ(velocity, 0.1)) return 0;
 
 		// 在除了船的交通工具上不須消耗水量
 		if (this.getVehicle() != null) {
@@ -128,9 +133,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements IPlayerD
 		}
 
 		// 鞘翅上可減少消耗
-		if (this.isFallFlying()) {
-			res *= 0.15;
-		}
+		if (this.isFallFlying()) res *= 0.15;
 
 		// 在溫度高的地方也會額外消耗水量
 		double temperature = Utils.temperature(this);
@@ -139,9 +142,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements IPlayerD
 		if (temperature >= 25) {
 			res += 0.03 - factor * 0.02;
 			res *= 1 + (temperature - 25) / (60 + factor * 40);
-		} else if (temperature <= -10) {
-			res *= 0.8;
-		}
+		} else if (temperature <= -10) res *= 0.8;
 
 		// 燒傷加成
 		if (this.isOnFire() && !this.hasStatusEffect(StatusEffects.FIRE_RESISTANCE))
@@ -154,10 +155,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements IPlayerD
 		float water = ((IPlayerDataSaver) this).getWater();
 		double temperature = Utils.temperature(this);
 		float res = (float) Math.pow(this.getVelocity().length() * 10, 2) / 500;
-		res -= 0.0003 * (water - 50);
 
 		if (temperature <= -10) {
-			res *= 1 + (-10 - temperature) / 60;
+			res *= 1 - (10 + temperature) / 60;
 		}
 
 		// 在除了船的交通工具上不須消耗體力

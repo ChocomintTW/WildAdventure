@@ -15,5 +15,20 @@
 
   "chat.wild_help.tooltip.mywebsite": "前我我的網站",
   "chat.wild_help.tooltip.help": "點擊得到幫助",
-  "chat.wild_help.tooltip.stick": "每根木棒 +10 秒"
+  "chat.wild_help.tooltip.stick": "每根木棒 +10 秒",
+
+  "tooltip.wild_adventure.heated_water": "+50 水量",
+  "tooltip.wild_adventure.energy_drink.info1": "+20 體力值",
+  "tooltip.wild_adventure.energy_drink.info2": "+20 水量",
+
+  "options.temperature_scale": "溫標",
+  "options.temperature.scale.celsius": "攝氏 (°C)",
+  "options.temperature.scale.fahrenheit": "華氏 (°F)",
+
+  "advancements.wild_adventure.adventure.root.title": "野外生存",
+  "advancements.wild_adventure.adventure.root.description": "",
+  "advancements.wild_adventure.adventure.boiling.title": "煮沸他！",
+  "advancements.wild_adventure.adventure.boiling.description": "把水瓶放在營火上煮沸",
+  "advancements.wild_adventure.adventure.homeotherm.title": "恆溫動物",
+  "advancements.wild_adventure.adventure.homeotherm.description": "穿上帶有恆溫IV附魔的全套裝備"
 }

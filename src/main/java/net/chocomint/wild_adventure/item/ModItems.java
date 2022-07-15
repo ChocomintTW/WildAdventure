@@ -14,8 +14,7 @@ import net.minecraft.util.registry.Registry;
 public class ModItems {
 
 	public static final Item HEATED_WATER = registerItem("heated_water",
-			new HeatedWaterBottleItem(new FabricItemSettings().recipeRemainder(Items.GLASS_BOTTLE)
-					.food(new FoodComponent.Builder().alwaysEdible().build()).maxCount(8).group(ItemGroup.FOOD)));
+			new HeatedWaterBottleItem(new FabricItemSettings().food(new FoodComponent.Builder().alwaysEdible().build()).maxCount(8).group(ItemGroup.FOOD)));
 	public static final Item ENERGY_DRINK = registerItem("energy_drink",
 			new EnergyDrinkItem(new FabricItemSettings().food(new FoodComponent.Builder().alwaysEdible().build()).maxCount(8).group(ItemGroup.FOOD)));
 

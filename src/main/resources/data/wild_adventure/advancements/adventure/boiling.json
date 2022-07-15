@@ -1,0 +1,32 @@
+{
+  "display": {
+    "icon": {
+      "item": "wild_adventure:heated_water"
+    },
+    "title": {
+      "translate": "advancements.wild_adventure.adventure.boiling.title"
+    },
+    "description": {
+      "translate": "advancements.wild_adventure.adventure.boiling.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "wild_adventure:adventure/root",
+  "criteria": {
+    "heated_water": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "wild_adventure:heated_water"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

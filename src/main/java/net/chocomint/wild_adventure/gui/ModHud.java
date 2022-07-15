@@ -2,6 +2,8 @@ package net.chocomint.wild_adventure.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.chocomint.wild_adventure.WildAdventure;
+import net.chocomint.wild_adventure.util.TemperatureScale;
+import net.chocomint.wild_adventure.util.interfaces.IGameOption;
 import net.chocomint.wild_adventure.util.interfaces.IPlayerDataSaver;
 import net.chocomint.wild_adventure.util.Utils;
 import net.fabricmc.api.EnvType;
@@ -55,7 +57,8 @@ public class ModHud extends DrawableHelper {
 
 			// text
 			TextRenderer tr = MinecraftClient.getInstance().textRenderer;
-			Text t = MutableText.of(new LiteralTextContent(Math.round(Utils.temperature(player)) + "°C"));
+			TemperatureScale scale = ((IGameOption) MinecraftClient.getInstance().options).getTemperatureScale().getValue();
+			Text t = MutableText.of(new LiteralTextContent(Math.round(Utils.temperature(player)) + scale.getUnitSymbol()));
 			tr.draw(matrices, t, x + 9.5f - (float) tr.getWidth(t) / 2, y + 28f, 0xffffff);
 		}
 	}

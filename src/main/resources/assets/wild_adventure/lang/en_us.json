@@ -17,5 +17,18 @@
   "chat.wild_help.tooltip.help": "Click for help",
   "chat.wild_help.tooltip.stick": "+10 seconds per stick",
 
-  "tooltip.wild_adventure.energy_drink": "+20 vitality"
+  "tooltip.wild_adventure.heated_water": "+50 water",
+  "tooltip.wild_adventure.energy_drink.info1": "+20 vitality",
+  "tooltip.wild_adventure.energy_drink.info2": "+20 water",
+
+  "options.temperature_scale": "Temperature Scale",
+  "options.temperature.scale.celsius": "Celsius (°C)",
+  "options.temperature.scale.fahrenheit": "Fahrenheit (°F)",
+
+  "advancements.wild_adventure.adventure.root.title": "Wild Adventure",
+  "advancements.wild_adventure.adventure.root.description": "",
+  "advancements.wild_adventure.adventure.boiling.title": "Boiling",
+  "advancements.wild_adventure.adventure.boiling.description": "Boiling water by putting water bottle on campfire",
+  "advancements.wild_adventure.adventure.homeotherm.title": "Homeotherm",
+  "advancements.wild_adventure.adventure.homeotherm.description": "Wear a full suit with enchantment of Thermostatic IV"
 }

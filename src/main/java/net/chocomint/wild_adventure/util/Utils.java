@@ -2,11 +2,14 @@ package net.chocomint.wild_adventure.util;
 
 import net.chocomint.wild_adventure.enchantment.ModEnchantments;
 import net.chocomint.wild_adventure.event.ModEvent;
+import net.chocomint.wild_adventure.util.interfaces.IGameOption;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.tag.BiomeTags;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -70,33 +73,38 @@ public class Utils {
 	));
 
 	public static double temperature(LivingEntity player) {
-		// biome
 		final World world = player.getWorld();
 		final RegistryEntry<Biome> biomeKey = biomeKey(player);
 		final double t = nearBiomeTemperature(player);
-		double base = Math.log(t + 1.4) / Math.log(1.015) - 33;
-		final double heatField = getHeatField(player, base);
+		double base;
+		if (isInNether(player)) {
+			base = t;
+		} else {
+			// biome
+			base = Math.log(t + 1.4) / Math.log(1.015) - 33;
+			final double heatField = getHeatField(player, base);
 
-		// height
-		if (player.getY() >= 100) {
-			base -= (player.getY() - 100) / 40;
+			// height
+			if (player.getY() >= 100) {
+				base -= (player.getY() - 100) / 40;
+			}
+
+			// time
+			long time = world.getTimeOfDay();
+			double timeFactor = 4;
+			if (biomeKey.getKey().isPresent())
+				timeFactor = TIME_FACTOR_MAP.getOrDefault(biomeKey.getKey().get(), 4.0);
+
+			base += timeFactor * Math.sin(2 * Math.PI / 24000 * (time - 2000));
+
+			// weather
+			base -= world.getRainGradient(1.0f) * (world.isThundering() ? 4 : 3);
+
+			// near campfire
+			base += heatField;
 		}
-
-		// time
-		long time = world.getTimeOfDay();
-		double timeFactor = 4;
-		if (biomeKey.getKey().isPresent())
-			timeFactor = TIME_FACTOR_MAP.getOrDefault(biomeKey.getKey().get(), 4.0);
-
-		base += timeFactor * Math.sin(2 * Math.PI / 24000 * (time - 2000));
-
-		// weather
-		base -= world.getRainGradient(1.0f) * (world.isThundering() ? 4 : 3);
-
-		// near campfire
-		base += heatField;
-
-		return base;
+		TemperatureScale scale = ((IGameOption) MinecraftClient.getInstance().options).getTemperatureScale().getValue();
+		return scale == TemperatureScale.FAHRENHEIT ? base * 9 / 5 + 32 : base;
 	}
 
 	private static final double CAMPFIRE_TEMPERATURE = 80;
@@ -120,10 +128,24 @@ public class Utils {
 		for (int i = -10; i <= 10; i++) {
 			for (int j = -10; j <= 10; j++) {
 				BlockPos pos = new BlockPos(player.getPos().add(i, 0, j));
-				sum += biome(world, pos).value().getTemperature();
+				RegistryEntry<Biome> b = biome(world, pos);
+				sum += isInNether(player) ? netherExactBiomeTemperature(b.getKey().get()) : b.value().getTemperature();
 			}
 		}
 		return sum / (21 * 21);
+	}
+
+	public static boolean isInNether(LivingEntity player) {
+		return biomeKey(player).isIn(BiomeTags.IS_NETHER);
+	}
+
+	public static double netherExactBiomeTemperature(RegistryKey<Biome> biome) {
+		if (biome == BiomeKeys.NETHER_WASTES) return 92;
+		else if (biome == BiomeKeys.SOUL_SAND_VALLEY) return 70;
+		else if (biome == BiomeKeys.CRIMSON_FOREST) return 75;
+		else if (biome == BiomeKeys.WARPED_FOREST) return 68;
+		else if (biome == BiomeKeys.BASALT_DELTAS) return 90;
+		else return 0;
 	}
 
 	public static int hunger(ItemStack stack) {

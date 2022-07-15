@@ -1,0 +1,71 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:blaze_powder"
+    },
+    "title": {
+      "translate": "advancements.wild_adventure.adventure.homeotherm.title"
+    },
+    "description": {
+      "translate": "advancements.wild_adventure.adventure.homeotherm.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "wild_adventure:adventure/boiling",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "equipment": {
+                "head": {
+                  "count": 1,
+                  "enchantments": [
+                    {
+                      "enchantment": "wild_adventure:thermostatic",
+                      "levels": 4
+                    }
+                  ]
+                },
+                "chest": {
+                  "enchantments": [
+                    {
+                      "enchantment": "wild_adventure:thermostatic",
+                      "levels": 4
+                    }
+                  ]
+                },
+                "legs": {
+                  "enchantments": [
+                    {
+                      "enchantment": "wild_adventure:thermostatic",
+                      "levels": 4
+                    }
+                  ]
+                },
+                "feet": {
+                  "enchantments": [
+                    {
+                      "enchantment": "wild_adventure:thermostatic",
+                      "levels": 4
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 200
+  }
+}

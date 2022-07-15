@@ -9,7 +9,9 @@
     "CampfireBlockEntityMixin",
     "BlockOnPlacedMixin",
     "BlockLuminanceModifier",
-    "InGameHudMixin"
+    "InGameHudMixin",
+    "AccessibilityOptionScreenMixin",
+    "GameOptionsMixin"
   ],
   "client": [
   ],
