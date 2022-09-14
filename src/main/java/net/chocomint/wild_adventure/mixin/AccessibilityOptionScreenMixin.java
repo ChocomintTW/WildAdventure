@@ -14,6 +14,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class AccessibilityOptionScreenMixin {
 	@Inject(method = "getOptions", at = @At("RETURN"), cancellable = true)
 	private static void appendOption(GameOptions gameOptions, CallbackInfoReturnable<SimpleOption<?>[]> cir) {
-		cir.setReturnValue(ArrayUtils.addAll(cir.getReturnValue(), ((IGameOption) gameOptions).getTemperatureScale()));
+		cir.setReturnValue(ArrayUtils.addAll(cir.getReturnValue(),
+				((IGameOption) gameOptions).getTemperatureScale(),
+				((IGameOption) gameOptions).getWaterRenderType()
+		));
 	}
 }

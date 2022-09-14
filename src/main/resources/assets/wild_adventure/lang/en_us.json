@@ -24,6 +24,12 @@
   "options.temperature_scale": "Temperature Scale",
   "options.temperature.scale.celsius": "Celsius (°C)",
   "options.temperature.scale.fahrenheit": "Fahrenheit (°F)",
+  "options.water_render_type": "Water Render Type",
+  "options.water_render_type.always_render": "Always Render",
+  "options.water_render_type.key_pressed": "Key Pressed",
+
+  "key.categories.wild_adventure": "Wild Adventure",
+  "key.wild_adventure.render_water": "Render Water",
 
   "advancements.wild_adventure.adventure.root.title": "Wild Adventure",
   "advancements.wild_adventure.adventure.root.description": "",

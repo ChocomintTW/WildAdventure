@@ -4,6 +4,7 @@ import net.chocomint.wild_adventure.effect.ModEffects;
 import net.chocomint.wild_adventure.enchantment.ModEnchantments;
 import net.chocomint.wild_adventure.event.ModEvent;
 import net.chocomint.wild_adventure.item.ModItems;
+import net.chocomint.wild_adventure.util.ModKeyBindings;
 import net.chocomint.wild_adventure.util.ModLootTableModifier;
 import net.fabricmc.api.ModInitializer;
 import org.apache.logging.log4j.LogManager;
@@ -15,6 +16,7 @@ public class WildAdventure implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		ModKeyBindings.register();
 		ModItems.registerModItems();
 		ModEffects.registerModEffect();
 		ModEvent.registerServerEvents();

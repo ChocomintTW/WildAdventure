@@ -3,7 +3,9 @@ package net.chocomint.wild_adventure.util;
 import net.chocomint.wild_adventure.enchantment.ModEnchantments;
 import net.chocomint.wild_adventure.event.ModEvent;
 import net.chocomint.wild_adventure.util.interfaces.IGameOption;
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.util.InputUtil;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ArmorItem;
@@ -20,6 +22,7 @@ import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeKeys;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
@@ -65,6 +68,11 @@ public class Utils {
 
 	public static <E extends LivingEntity> GameMode getGameMode(E player) {
 		return player instanceof ServerPlayerEntity sp ? sp.interactionManager.getGameMode() : null;
+	}
+
+	public static String getKeyName(InputUtil.Key key) {
+		int code = key.getCode();
+		return GLFW.glfwGetKeyName(code, GLFW.glfwGetKeyScancode(code));
 	}
 
 	public static final Map<RegistryKey<Biome>, Double> TIME_FACTOR_MAP = new HashMap<>(Map.ofEntries(
