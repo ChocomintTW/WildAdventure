@@ -39,7 +39,7 @@ public class ModEvent {
 		ServerEntityEvents.ENTITY_LOAD.register((entity, world) -> {
 			if (entity instanceof PlayerEntity player) {
 				player.sendMessage(Text.translatable("command.wild_adventure.first_load_1", player.getName(), Text.literal("Chocomint")
-						.styled(style -> style.withColor(Formatting.GREEN).withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://chocomint.cf/")).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.translatable("chat.wild_help.tooltip.mywebsite"))))), false);
+						.styled(style -> style.withColor(Formatting.GREEN).withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://chocomint.cocodenut.org/")).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.translatable("chat.wild_help.tooltip.mywebsite"))))), false);
 				player.sendMessage(Text.translatable("command.wild_adventure.first_load_2", Text.literal("/wild help")
 						.styled(style -> style.withColor(Formatting.GREEN).withClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/wild help")).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.translatable("chat.wild_help.tooltip.help"))))), false);
 			}
